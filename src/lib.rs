@@ -8,7 +8,7 @@ pub mod listener;
 pub mod connection;
 pub mod prelude;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Hash, Eq, PartialEq)]
 pub struct Address {
   pub host: (u8, u8, u8, u8),
   pub port: u16,
