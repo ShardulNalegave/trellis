@@ -1,9 +1,13 @@
 
 // ===== Imports =====
 use std::{io::Error, net::SocketAddr, collections::HashMap};
-use tokio::net::TcpStream;
+use bytes::BytesMut;
+use tokio::{net::TcpStream, io::{AsyncReadExt, AsyncWriteExt}};
 
-use crate::Address;
+use crate::{
+  Address,
+  rw::{ReadPreReqs, WritePreReqs},
+};
 // ===================
 
 pub type Connections = HashMap<Address, Connection>;
@@ -31,5 +35,21 @@ impl TryFrom<TcpStream> for Connection {
     let local_addr = stream.local_addr()?.into();
     let peer_addr = stream.peer_addr()?.into();
     Ok(Self { local_addr, peer_addr, stream })
+  }
+}
+
+#[async_trait]
+impl ReadPreReqs for Connection {
+  async fn read(&mut self, byts: &mut BytesMut) -> Result<(), Error> {
+    self.stream.read(byts).await?;
+    Ok(())
+  }
+}
+
+#[async_trait]
+impl WritePreReqs for Connection {
+  async fn write(&mut self, byts: &mut BytesMut) -> Result<(), Error> {
+    self.stream.write(byts).await?;
+    Ok(())
   }
 }
