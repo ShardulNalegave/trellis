@@ -6,7 +6,7 @@ use tokio::{net::TcpStream, io::{AsyncReadExt, AsyncWriteExt}};
 
 use crate::{
   Address,
-  rw::{ReadPreReqs, WritePreReqs},
+  rw::{ReadPreReqs, WritePreReqs, Reader, Writer},
 };
 // ===================
 
@@ -53,3 +53,9 @@ impl WritePreReqs for Connection {
     Ok(())
   }
 }
+
+#[async_trait]
+impl Reader for Connection {}
+
+#[async_trait]
+impl Writer for Connection {}
