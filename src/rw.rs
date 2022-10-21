@@ -1,6 +1,6 @@
 
 // ===== Imports =====
-use std::io::Result;
+use std::io::{Result, ErrorKind};
 use bytes::{BytesMut, Buf, BufMut};
 
 use crate::zero_filled_bytes_mut;
@@ -96,6 +96,17 @@ pub trait Reader: ReadPreReqs {
     let res = byts.get_f64();
     Ok(res)
   }
+
+  async fn read_string(&mut self, len: usize) -> Result<String> {
+    let mut byts = zero_filled_bytes_mut(len);
+    self.read(&mut byts).await?;
+    let res = String::from_utf8(byts.to_vec());
+    if let Err(_) = res {
+      Err(std::io::Error::new(ErrorKind::InvalidData, "Could not read bytes as UTF-8 compatible string"))
+    } else if let Ok(data) = res {
+      Ok(data)
+    } else { unreachable!() }
+  }
 }
 
 // =============================================================
@@ -187,6 +198,13 @@ pub trait Writer: WritePreReqs {
   async fn write_f64(&mut self, data: f64) -> Result<()> {
     let mut byts = BytesMut::new();
     byts.put_f64(data);
+    self.write(&mut byts).await?;
+    Ok(())
+  }
+
+  async fn write_string(&mut self, data: String) -> Result<()> {
+    let mut byts = BytesMut::new();
+    byts.put(data.as_bytes());
     self.write(&mut byts).await?;
     Ok(())
   }

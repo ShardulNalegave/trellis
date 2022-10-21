@@ -20,6 +20,7 @@ async fn main() -> Result<(), Error> {
       let mut conn = listener.accept().await?;
       println!("New Connection: {:?}", conn.peer_addr);
       conn.write_u8(100).await?;
+      conn.write_string(String::from("Hello, World!")).await?;
     }
   } else if run_type == "client" {
     let mut conn = Connection::new(address).await?;
@@ -27,6 +28,8 @@ async fn main() -> Result<(), Error> {
     println!("Local Address: {:?}", conn.local_addr);
     let num = conn.read_u8().await?;
     println!("Message Received: {:?}", num);
+    let data = conn.read_string(13).await?;
+    println!("{:?}", data);
   }
 
   Ok(())
