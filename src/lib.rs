@@ -2,6 +2,8 @@
 // ===== Imports =====
 #[macro_use] extern crate async_trait;
 use std::{net::{SocketAddr, IpAddr, Ipv4Addr}};
+
+use bytes::{BytesMut, BufMut};
 // ===================
 
 pub mod node;
@@ -40,4 +42,10 @@ impl From<SocketAddr> for Address {
       panic!("Expected an IpV4 Socket Address")
     }
   }
+}
+
+pub fn zero_filled_bytes_mut(len: usize) -> BytesMut {
+  let mut byts = BytesMut::with_capacity(len);
+  byts.put(&*vec![0; len]);
+  byts
 }

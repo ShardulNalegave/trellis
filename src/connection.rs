@@ -49,7 +49,7 @@ impl ReadPreReqs for Connection {
 #[async_trait]
 impl WritePreReqs for Connection {
   async fn write(&mut self, byts: &mut BytesMut) -> Result<(), Error> {
-    self.stream.write(byts).await?;
+    self.stream.write(&byts[..]).await?;
     Ok(())
   }
 }
