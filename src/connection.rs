@@ -1,6 +1,6 @@
 
 // ===== Imports =====
-use std::{io::Error, net::SocketAddr, collections::HashMap};
+use std::{io::Error, net::SocketAddr};
 use bytes::BytesMut;
 use tokio::{net::TcpStream, io::{AsyncReadExt, AsyncWriteExt}};
 
@@ -10,8 +10,9 @@ use crate::{
 };
 // ===================
 
-pub type Connections = HashMap<Address, Connection>;
-
+/// # Connection
+/// I/O Object for managing Tcp connections.
+/// A new connection can be created by connecting to an endpoint using `Connection::new()` constructor.
 pub struct Connection {
   pub local_addr: Address,
   pub peer_addr: Address,
@@ -19,6 +20,8 @@ pub struct Connection {
 }
 
 impl Connection {
+  /// ## Constructor
+  /// Constructs a new `Connection` to the provided endpoint.
   pub async fn new(to: Address) -> Result<Self, Error> {
     let to: SocketAddr = to.into();
     let stream = TcpStream::connect(to).await?;
@@ -56,6 +59,5 @@ impl WritePreReqs for Connection {
 
 #[async_trait]
 impl Reader for Connection {}
-
 #[async_trait]
 impl Writer for Connection {}
