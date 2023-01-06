@@ -1,7 +1,14 @@
 [package]
 name = "trellis"
+description = "A simple networking library for Rust."
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/ShardulNalegave/trellis"
+homepage = "https://github.com/ShardulNalegave/trellis"
+keywords = ["networking", "simple", "tcp", "stream"]
+exclude = ["example-rust"]
 
 [dependencies]
 bytes = "1"
