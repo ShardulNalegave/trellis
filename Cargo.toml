@@ -1,5 +1,5 @@
 [package]
-name = "trellis"
+name = "trellis-net"
 description = "A simple networking library for Rust."
 version = "0.1.0"
 edition = "2021"

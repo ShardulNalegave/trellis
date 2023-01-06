@@ -2,7 +2,7 @@
 // ===== Imports =====
 use std::env;
 use std::io::Error;
-use trellis::prelude::*;
+use trellis_net::prelude::*;
 // ===================
 
 #[tokio::main]

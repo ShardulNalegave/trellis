@@ -42,7 +42,7 @@ name = "example-rust"
 version = "0.1.0"
 dependencies = [
  "tokio",
- "trellis",
+ "trellis-net",
 ]
 
 [[package]]
@@ -248,7 +248,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "trellis"
+name = "trellis-net"
 version = "0.1.0"
 dependencies = [
  "async-trait",
