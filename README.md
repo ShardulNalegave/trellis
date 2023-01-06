@@ -13,7 +13,7 @@
 
 // ===== Imports =====
 use std::io::Error;
-use trellis::prelude::*;
+use trellis_net::prelude::*;
 // ===================
 
 #[tokio::main]
@@ -41,7 +41,7 @@ async fn main() -> Result<(), Error> {
 
 // ===== Imports =====
 use std::io::Error;
-use trellis::prelude::*;
+use trellis_net::prelude::*;
 // ===================
 
 #[tokio::main]
